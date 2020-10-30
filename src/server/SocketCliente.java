@@ -15,13 +15,7 @@ import java.io.*;
  * del servidor, escribiéndolos en pantalla.
  */
 public class SocketCliente
- {
-     /** Programa principal, crea el socket cliente */
-     public static void main (String [] args)
-     {
-         new SocketCliente();
-     }
-     
+ {    
      /**
       * Crea el socket cliente y lee los datos
       */
@@ -30,16 +24,16 @@ public class SocketCliente
          try
          {
              /* Se crea el socket cliente */
-             Socket socket = new Socket ("localhost", 25557);
-             System.out.println ("conectado");
+             Socket socket = new Socket ("localhost", 15557);
+             System.out.println ("Conexión exitosa...");
+             System.out.println ("Conectado al puerto 15557...");
 
              /* Se hace que el cierre espere a la recogida de todos los datos desde
              * el otro lado */
              socket.setSoLinger (true, 10);
              
              /* Se obtiene un stream de lectura para leer objetos */
-             DataInputStream bufferEntrada =
-                new DataInputStream (socket.getInputStream());
+             DataInputStream bufferEntrada = new DataInputStream (socket.getInputStream());
              
              /* Se lee un Datosocket que nos envía el servidor y se muestra 
               * en pantalla */
