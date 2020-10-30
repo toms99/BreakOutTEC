@@ -4,10 +4,15 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Player extends GameObject {
+    int lifes;
+    int gameWidth;
+    int gameHeight;
 
-    Player(int x, int y, int width, int height){
+    Player(int x, int y, int width, int height, int gameWidth, int gameHeight){
         super(x, y, width, height);
-
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
+        lifes = 3;
     }
     @Override
     public void paint(Graphics graphics) {
@@ -21,8 +26,8 @@ public class Player extends GameObject {
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            if (x >= (1000 - width)){
-                x = (1000 - width);
+            if (x >= (gameWidth - width)){
+                x = (gameWidth - width);
             } else {
                 moveRight();
             }
@@ -48,4 +53,6 @@ public class Player extends GameObject {
     public void moveLeft(){
         x -= 20;
     }
+
+    
 }

@@ -14,7 +14,7 @@ public class Brick extends  GameObject{
     public boolean speedLess = false;
 
     public Brick(int indexI, int indexJ, int width, int height, int color) {
-        super(indexJ * width + 80, indexI * height + 40, width, height);
+        super(indexJ * width + 5, indexI * height + 40, width, height);
         if (color == 1){
             myColor = Color.RED;
             value = 1;
@@ -41,17 +41,16 @@ public class Brick extends  GameObject{
         graphics2D.setStroke(new BasicStroke(3));
         graphics2D.setColor(Color.black);
         graphics2D.drawRect(x, y, width, height);
-        /*for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j] > 0) {
-                    graphics2D.setColor(myColor);
-                    graphics2D.fillRect(j * width + 80, i * height + 40, width, height);
-                    graphics2D.setStroke(new BasicStroke(3));
-                    graphics2D.setColor(Color.black);
-                    graphics2D.drawRect(j * width + 80, i * height + 40, width, height);
-                }
-            }
-        }*/
     }
 
+    public String hasAbility(){
+        String result = "none";
+        if (life) {result = "life";}
+        if (ball) {result = "ball";}
+        if (doublePlayer) {result = "doublePlayer";}
+        if (splitPlayer) {result = "splitPlayer";}
+        if (speedPlus) {result = "speedPlus";}
+        if (speedLess) {result = "speedLess";}
+        return  result;
+    }
 }
