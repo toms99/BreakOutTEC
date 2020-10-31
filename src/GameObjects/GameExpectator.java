@@ -34,6 +34,17 @@ public class GameExpectator extends JPanel implements KeyListener, ActionListene
     int greenScore;
 
 
+    /**
+     * Constructor
+     * @param rows
+     * @param columns
+     * @param gameWidth
+     * @param gameHeight
+     * @param redScore
+     * @param orangeScore
+     * @param yellowScore
+     * @param greenScore
+     */
     public GameExpectator(int rows, int columns, int gameWidth, int gameHeight,
                           int redScore, int orangeScore, int yellowScore, int greenScore) {
         this.rows = rows;
@@ -60,6 +71,10 @@ public class GameExpectator extends JPanel implements KeyListener, ActionListene
         timer.start();
     }
 
+    /**
+     * Encargado de pintar la interfaz cada vvuelta del ciclo.
+     * @param graphics
+     */
     public void paint(Graphics graphics) {
         this.graphics = graphics;
         // background
@@ -175,6 +190,18 @@ public class GameExpectator extends JPanel implements KeyListener, ActionListene
     public void keyReleased(KeyEvent e) {
     }
 
+    /**
+     * Funcion encargada de actualizar al cliente de modo que no tenga
+     * control con el teclado.
+     * @param play
+     * @param ballX
+     * @param ballY
+     * @param ballxDir
+     * @param ballyDir
+     * @param paddleWidth
+     * @param paddleX
+     * @param paddleY
+     */
     public void updateLoop(boolean play,
                            int ballX,
                            int ballY,

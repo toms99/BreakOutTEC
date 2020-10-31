@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Clase de la que heredan todos los objetos del juego.
+ */
 public abstract class GameObject implements KeyListener, ActionListener {
     protected int x;
     protected int y;

@@ -13,6 +13,19 @@ public class Brick extends  GameObject{
     public boolean speedPlus = false;
     public boolean speedLess = false;
 
+
+    /**
+     * Constructor.
+     * @param indexI
+     * @param indexJ
+     * @param width
+     * @param height
+     * @param color
+     * @param redScore
+     * @param orangeScore
+     * @param yellowScore
+     * @param greenScore
+     */
     public Brick(int indexI, int indexJ, int width, int height, int color,
                  int redScore, int orangeScore, int yellowScore, int greenScore) {
         super(indexJ * width + 5, indexI * height + 40, width, height);
@@ -35,6 +48,10 @@ public class Brick extends  GameObject{
         System.out.println(myColor);
     }
 
+    /**
+     * Pinta los ladrillos.
+     * @param graphics2D
+     */
     @Override
     public void paint(Graphics2D graphics2D) {
         graphics2D.setColor(myColor);
@@ -44,6 +61,10 @@ public class Brick extends  GameObject{
         graphics2D.drawRect(x, y, width, height);
     }
 
+    /**
+     * Retorna la habilidad que tiene cada ladrillo.
+     * @return
+     */
     public String hasAbility(){
         String result = "none";
         if (life) {result = "life";}

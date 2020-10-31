@@ -194,7 +194,8 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
 
     @Override
     /**
-     * Es llamado que vez que se completa una acción de
+     * Es llamado cada vez que se completa una acción del
+     * ActionListener
      */
     public void actionPerformed(ActionEvent e) {
         timer.start();
@@ -268,6 +269,11 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyReleased(KeyEvent e) {}
 
+    /**
+     * Se encarga de aplicar en el juego, la habilidad del ladrillo
+     * cuando es destruido.
+     * @param brick
+     */
     public void applyAbility(Brick brick) {
         String ability  = brick.hasAbility();
         if (ability != "none") {
