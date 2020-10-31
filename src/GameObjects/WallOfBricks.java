@@ -10,7 +10,8 @@ public class WallOfBricks extends GameObject{
 
 
 
-    public WallOfBricks(int rows, int columns, int width, int heigth) {
+    public WallOfBricks(int rows, int columns, int width, int heigth, int redScore,
+                        int orangeScore, int yellowScore, int greenScore) {
         super(0,0,width,heigth);
         wall = new int[rows][columns];
         wallOfBricks = new Brick[rows][columns];
@@ -30,7 +31,8 @@ public class WallOfBricks extends GameObject{
                 if (i >= 3*(wall.length/4)){
                     wall[i][j] = 4;
                 }
-                wallOfBricks[i][j] = new Brick(i, j, width/wall[0].length, height/wall.length, wall[i][j]);
+                wallOfBricks[i][j] = new Brick(i, j, width/wall[0].length, height/wall.length, wall[i][j],
+                        redScore, orangeScore, yellowScore, greenScore);
             }
         }
 

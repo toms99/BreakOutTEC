@@ -17,7 +17,7 @@ public final class App {
         System.out.println("Hello World!");
 
         JFrame frame = new JFrame();
-        GameLoop gameLoop = new GameLoop(8, 14, 1000, 700);
+        GameLoop gameLoop = new GameLoop(8, 14, 1000, 700, 1, 2, 3, 4);
 
         frame.setBounds(10, 10, 1000, 750);
         frame.setTitle("Break Out TEC");

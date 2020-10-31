@@ -33,6 +33,10 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
     private WallOfBricks mapGenerator;
     private Player player;
 
+    int redScore;
+    int orangeScore;
+    int yellowScore;
+    int greenScore;
     GameExpectator gameExpectator;
 
     /**
@@ -43,18 +47,24 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
      * @param gameWidth: ancho del fondo
      * @param gameHeight: altura del fondo
      */
-    public GameLoop(int rows, int columns, int gameWidth, int gameHeight){
+    public GameLoop(int rows, int columns, int gameWidth, int gameHeight, int redScore, int orangeScore,
+                    int yellowScore, int greenScore){
         this.rows = rows;
         this.columns = columns;
         this.gameWidth = gameWidth;
         this. gameHeight = gameHeight;
+        this.redScore = redScore;
+        this.yellowScore = yellowScore;
+        this.greenScore = greenScore;
+        this.orangeScore = orangeScore;
 
         play = true;
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
 
-        mapGenerator = new WallOfBricks(rows, columns, gameWidth - 7, 100 );
+        mapGenerator = new WallOfBricks(rows, columns, gameWidth - 7, 100,
+                redScore, orangeScore, yellowScore, greenScore);
         totalBricks = rows*columns;
         player = new Player(gameWidth/2 - 50, gameHeight - 28, 100, 8, gameWidth, gameHeight);
         Ball newball = new Ball(gameWidth/2, gameHeight/2);
@@ -66,7 +76,7 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
 
         // Create Expectator
         JFrame frame = new JFrame();
-        gameExpectator = new GameExpectator(rows, columns, gameWidth, gameHeight);
+        gameExpectator = new GameExpectator(rows, columns, gameWidth, gameHeight, redScore, orangeScore, yellowScore, greenScore);
 
         frame.setBounds(10, 10, 1000, 750);
         frame.setTitle("Break Out TEC");
@@ -129,7 +139,8 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
 
 
             level += 1;
-            mapGenerator = new WallOfBricks(rows, columns, gameWidth - 7, 100 );
+            mapGenerator = new WallOfBricks(rows, columns, gameWidth - 7, 100 ,
+                    redScore, orangeScore, yellowScore, greenScore );
             totalBricks = rows*columns;
 
             graphics.setColor(Color.yellow);

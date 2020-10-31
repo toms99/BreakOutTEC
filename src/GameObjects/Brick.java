@@ -13,23 +13,24 @@ public class Brick extends  GameObject{
     public boolean speedPlus = false;
     public boolean speedLess = false;
 
-    public Brick(int indexI, int indexJ, int width, int height, int color) {
+    public Brick(int indexI, int indexJ, int width, int height, int color,
+                 int redScore, int orangeScore, int yellowScore, int greenScore) {
         super(indexJ * width + 5, indexI * height + 40, width, height);
         if (color == 1){
             myColor = Color.RED;
-            value = 1;
+            value = redScore;
         }
         if (color == 2){
             myColor = Color.ORANGE;
-            value= 2;
+            value= orangeScore;
         }
         if (color == 3){
             myColor = Color.yellow;
-            value = 3;
+            value = yellowScore;
         }
         if (color == 4){
             myColor = Color.GREEN;
-            value = 1;
+            value = greenScore;
         }
         System.out.println(myColor);
     }

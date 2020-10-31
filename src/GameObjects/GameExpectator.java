@@ -28,9 +28,14 @@ public class GameExpectator extends JPanel implements KeyListener, ActionListene
 
     private WallOfBricks mapGenerator;
     private Player player;
+    int redScore;
+    int orangeScore;
+    int yellowScore;
+    int greenScore;
 
 
-    public GameExpectator(int rows, int columns, int gameWidth, int gameHeight) {
+    public GameExpectator(int rows, int columns, int gameWidth, int gameHeight,
+                          int redScore, int orangeScore, int yellowScore, int greenScore) {
         this.rows = rows;
         this.columns = columns;
         this.gameWidth = gameWidth;
@@ -38,12 +43,18 @@ public class GameExpectator extends JPanel implements KeyListener, ActionListene
 
         play = true;
 
-        mapGenerator = new WallOfBricks(rows, columns, gameWidth - 7, 100);
+        mapGenerator = new WallOfBricks(rows, columns, gameWidth - 7, 100, redScore, orangeScore,
+                yellowScore, greenScore);
         totalBricks = rows * columns;
         player = new Player(gameWidth / 2 - 50, gameHeight - 28, 100, 8, gameWidth, gameHeight);
         Ball newball = new Ball(gameWidth / 2, gameHeight / 2);
         ballsCount += 1;
         balls.add(newball);
+
+        this.redScore = redScore;
+        this.yellowScore = yellowScore;
+        this.greenScore = greenScore;
+        this.orangeScore = orangeScore;
 
         timer = new Timer(delay, this);
         timer.start();
@@ -94,7 +105,8 @@ public class GameExpectator extends JPanel implements KeyListener, ActionListene
 
 
             level += 1;
-            mapGenerator = new WallOfBricks(rows, columns, gameWidth - 7, 100);
+            mapGenerator = new WallOfBricks(rows, columns, gameWidth - 7, 100, redScore,
+                    orangeScore, yellowScore, greenScore);
             totalBricks = rows * columns;
 
             graphics.setColor(Color.yellow);
