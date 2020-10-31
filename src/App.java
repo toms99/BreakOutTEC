@@ -1,6 +1,6 @@
 import GameObjects.GameLoop;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * Hello world!
@@ -17,9 +17,9 @@ public final class App {
         System.out.println("Hello World!");
 
         JFrame frame = new JFrame();
-        GameLoop gameLoop = new GameLoop();
-
-        frame.setBounds(10, 10, 1000, 800);
+        //GameLoop gameLoop = new GameLoop(8, 14, 1000, 700, 1, 2, 3, 4);
+        GameLoop gameLoop = GameLoop.getInstance();
+        frame.setBounds(10, 10, 1000, 750);
         frame.setTitle("Break Out TEC");
         frame.setResizable(true);
         frame.setVisible(true);

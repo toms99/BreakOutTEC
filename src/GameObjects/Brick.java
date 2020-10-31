@@ -13,27 +13,45 @@ public class Brick extends  GameObject{
     public boolean speedPlus = false;
     public boolean speedLess = false;
 
-    public Brick(int indexI, int indexJ, int width, int height, int color) {
-        super(indexJ * width + 80, indexI * height + 40, width, height);
+
+    /**
+     * Constructor.
+     * @param indexI
+     * @param indexJ
+     * @param width
+     * @param height
+     * @param color
+     * @param redScore
+     * @param orangeScore
+     * @param yellowScore
+     * @param greenScore
+     */
+    public Brick(int indexI, int indexJ, int width, int height, int color,
+                 int redScore, int orangeScore, int yellowScore, int greenScore) {
+        super(indexJ * width + 5, indexI * height + 40, width, height);
         if (color == 1){
             myColor = Color.RED;
-            value = 1;
+            value = redScore;
         }
         if (color == 2){
             myColor = Color.ORANGE;
-            value= 2;
+            value= orangeScore;
         }
         if (color == 3){
             myColor = Color.yellow;
-            value = 3;
+            value = yellowScore;
         }
         if (color == 4){
             myColor = Color.GREEN;
-            value = 1;
+            value = greenScore;
         }
         System.out.println(myColor);
     }
 
+    /**
+     * Pinta los ladrillos.
+     * @param graphics2D
+     */
     @Override
     public void paint(Graphics2D graphics2D) {
         graphics2D.setColor(myColor);
@@ -41,17 +59,20 @@ public class Brick extends  GameObject{
         graphics2D.setStroke(new BasicStroke(3));
         graphics2D.setColor(Color.black);
         graphics2D.drawRect(x, y, width, height);
-        /*for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j] > 0) {
-                    graphics2D.setColor(myColor);
-                    graphics2D.fillRect(j * width + 80, i * height + 40, width, height);
-                    graphics2D.setStroke(new BasicStroke(3));
-                    graphics2D.setColor(Color.black);
-                    graphics2D.drawRect(j * width + 80, i * height + 40, width, height);
-                }
-            }
-        }*/
     }
 
+    /**
+     * Retorna la habilidad que tiene cada ladrillo.
+     * @return
+     */
+    public String hasAbility(){
+        String result = "none";
+        if (life) {result = "life";}
+        if (ball) {result = "ball";}
+        if (doublePlayer) {result = "doublePlayer";}
+        if (splitPlayer) {result = "splitPlayer";}
+        if (speedPlus) {result = "speedPlus";}
+        if (speedLess) {result = "speedLess";}
+        return  result;
+    }
 }

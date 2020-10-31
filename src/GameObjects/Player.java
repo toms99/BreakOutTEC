@@ -4,12 +4,29 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Player extends GameObject {
+    int lifes;
+    int gameWidth;
+    int gameHeight;
 
-    Player(int x, int y, int width, int height){
+    /**
+     * Constructor.
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param gameWidth
+     * @param gameHeight
+     */
+    Player(int x, int y, int width, int height, int gameWidth, int gameHeight){
         super(x, y, width, height);
-
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
+        lifes = 3;
     }
     @Override
+    /**
+     * Pinta al jugador en la pantalla.
+     */
     public void paint(Graphics graphics) {
         //super.paint(graphics);
 
@@ -19,10 +36,13 @@ public class Player extends GameObject {
     }
 
     @Override
+    /**
+     * Es llamada cada vez que es presionada una tecla.
+     */
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            if (x >= (1000 - width)){
-                x = (1000 - width);
+            if (x >= (gameWidth - width)){
+                x = (gameWidth - width);
             } else {
                 moveRight();
             }
@@ -48,4 +68,6 @@ public class Player extends GameObject {
     public void moveLeft(){
         x -= 20;
     }
+
+    
 }
