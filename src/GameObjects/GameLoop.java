@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Singleton class.
  * Main loop of the game
  */
 public class GameLoop extends JPanel implements KeyListener, ActionListener {
@@ -39,6 +40,8 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
     int greenScore;
     GameExpectator gameExpectator;
 
+    private static GameLoop SingletonGameLoop = null;
+
     /**
      * GameLoop constructor. Crea todos los objetos necesarios para desplegar
      * la interfaz y el juego.
@@ -49,6 +52,8 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
      */
     public GameLoop(int rows, int columns, int gameWidth, int gameHeight, int redScore, int orangeScore,
                     int yellowScore, int greenScore){
+
+
         this.rows = rows;
         this.columns = columns;
         this.gameWidth = gameWidth;
@@ -89,6 +94,19 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
 
 
     }
+
+    /**
+     * Singleton
+     * @return
+     */
+    public static GameLoop getInstance()
+    {
+        if (SingletonGameLoop == null)
+            SingletonGameLoop = new GameLoop(8, 14, 1000, 700, 1, 2, 3, 4);;
+
+        return SingletonGameLoop;
+    }
+
 
     /**
      * Dibuja la interfaz.
