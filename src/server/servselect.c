@@ -162,14 +162,14 @@ void nuevoCliente (int servidor, int *clientes, int *nClientes, struct datosTabl
 		return;
 	}
 		
-	/* Envía su número de cliente al cliente */
-	Escribe_Socket (clientes[(*nClientes)-1], (char *)nClientes, sizeof(int));
-	/*Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.columnas), sizeof(int));
-	/*Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.filas), sizeof(int));
+	/* Envía los datos iniciales del tablero al cliente */
+	//Escribe_Socket (clientes[(*nClientes)-1], 1, sizeof(int));
+	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.columnas), sizeof(int));
+	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.filas), sizeof(int));
 	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloRojo), sizeof(int));
 	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloVerde), sizeof(int));
 	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloAmarillo), sizeof(int));
-	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloNaranja), sizeof(int));*/
+	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloNaranja), sizeof(int));
 
 	/* Escribe en pantalla que ha aceptado al cliente y vuelve */
 	printf ("Aceptado cliente %d\n", *nClientes);

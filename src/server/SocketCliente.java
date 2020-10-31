@@ -40,7 +40,7 @@ public class SocketCliente
             DataInputStream bufferEntrada = new DataInputStream (socket.getInputStream());            // Se contruye el stream de entrada
             DatoSocket aux = new DatoSocket(""); // Para guardar el dato leido del socket
             aux.readObject (bufferEntrada); // Se lee del socket.
-            System.out.println (aux.toString());
+            System.out.println ("Cliente:" + aux.toString());
 
 
              /* Se obtiene un flujo de envio de datos para enviar un dato al servidor 
