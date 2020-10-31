@@ -10,15 +10,43 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <../libraries/Socket_Servidor.h>
 #include <../libraries/Socket.h>
 
 #define MAX_CLIENTES 3
 
+struct datosTableroInicial
+{
+	int filas; 
+	int columnas;
+	int ladrilloRojo;
+	int ladrilloVerde;
+	int ladrilloAmarillo;
+	int ladrilloNaranja;
+};
+
+struct datosObjetos
+{
+	bool play;
+	int posxbol;
+	int posybol; 
+	int dirxbol; 
+	int dirybol; 
+	int anchoraquet; 
+	int posxraq;
+	int posyraq;
+};
+
+
 /* Prototipos de las funciones definidas en este fichero */
-void nuevoCliente (int servidor, int *clientes, int *nClientes);
+void nuevoCliente (int servidor, int *clientes, int *nClientes, struct datosTableroInicial tab);
 int dameMaximo (int *tabla, int n);
 void compactaClaves (int *tabla, int *n);
+struct datosTableroInicial setTablero(void);
+void sendTableroInicial (struct datosTableroInicial tab, int servidor, int *clientes, int *nClientes);
+
+
 
 /*
  * Programa principal.
@@ -26,7 +54,7 @@ void compactaClaves (int *tabla, int *n);
  * Cuando un cliente se conecta, le atiende y lo añade al select() y vuelta
  * a empezar.
  */
-main()
+int main()	
 {
 	int socketServidor;				/* Descriptor del socket servidor */
 	int socketCliente[MAX_CLIENTES];/* Descriptores de sockets con clientes */
@@ -35,20 +63,23 @@ main()
 	int buffer;						/* Buffer para leer de los socket */
 	int maximo;						/* Número de descriptor más grande */
 	int i;							/* Para bubles */
+	struct datosTableroInicial datosIn;
+	struct datosObjetos datoObj;
+
 
 	/* Se abre el socket servidor, avisando por pantalla y saliendo si hay 
 	 * algún problema */
 	socketServidor = Abre_Socket_Inet ("cpp_java");
 	if (socketServidor != -1)
 	{
-		perror ("Apertura de servidor...\nEsperando conexiones...");
+		datosIn = setTablero();
+		perror ("\nApertura de servidor...\nEsperando conexiones...\n");
 	}else
 	{	
 		perror ("Error al abrir servidor");
 		exit (-1);
 	}
 	
-
 	/* Bucle infinito.
 	 * Se atiende si hay más clientes para conectar y a los mensajes enviados
 	 * por los clientes ya conectados */
@@ -83,6 +114,7 @@ main()
 		 * mensaje */
 		select (maximo + 1, &descriptoresLectura, NULL, NULL, NULL);
 
+
 		/* Se comprueba si algún cliente ya conectado ha enviado algo */
 		for (i=0; i<numeroClientes; i++)
 		{
@@ -106,7 +138,7 @@ main()
 		/* Se comprueba si algún cliente nuevo desea conectarse y se le
 		 * admite */
 		if (FD_ISSET (socketServidor, &descriptoresLectura))
-			nuevoCliente (socketServidor, socketCliente, &numeroClientes);
+			nuevoCliente (socketServidor, socketCliente, &numeroClientes, datosIn);
 	}
 }
 
@@ -115,7 +147,7 @@ main()
  * Se le pasa el socket servidor y el array de clientes, con el número de
  * clientes ya conectados.
  */
-void nuevoCliente (int servidor, int *clientes, int *nClientes)
+void nuevoCliente (int servidor, int *clientes, int *nClientes, struct datosTableroInicial tab)
 {
 	/* Acepta la conexión con el cliente, guardándola en el array */
 	clientes[*nClientes] = Acepta_Conexion_Cliente (servidor);
@@ -132,6 +164,12 @@ void nuevoCliente (int servidor, int *clientes, int *nClientes)
 		
 	/* Envía su número de cliente al cliente */
 	Escribe_Socket (clientes[(*nClientes)-1], (char *)nClientes, sizeof(int));
+	/*Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.columnas), sizeof(int));
+	/*Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.filas), sizeof(int));
+	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloRojo), sizeof(int));
+	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloVerde), sizeof(int));
+	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloAmarillo), sizeof(int));
+	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloNaranja), sizeof(int));*/
 
 	/* Escribe en pantalla que ha aceptado al cliente y vuelve */
 	printf ("Aceptado cliente %d\n", *nClientes);
@@ -183,4 +221,24 @@ void compactaClaves (int *tabla, int *n)
 	
 	*n = j;
     
+}
+
+
+struct datosTableroInicial setTablero(void)
+{
+	struct datosTableroInicial datosIni;
+
+	printf("Ingrese el número de filas de ladrillos:\n");
+	scanf("%d",&datosIni.filas);
+	printf("Ingrese el número de columnas de ladrillos:\n");
+	scanf("%d",&datosIni.columnas);
+	printf("Ingrese el valor para los ladrillos rojos:\n");
+	scanf("%d",&datosIni.ladrilloRojo);
+	printf("Ingrese el valor para los ladrillos verdes:\n");
+	scanf("%d",&datosIni.ladrilloVerde);
+	printf("Ingrese el valor para los ladrillos amarillos:\n");
+	scanf("%d",&datosIni.ladrilloAmarillo);
+	printf("Ingrese el valor para los ladrillos naranja\n");
+	scanf("%d",&datosIni.ladrilloNaranja);
+	return datosIni;
 }
