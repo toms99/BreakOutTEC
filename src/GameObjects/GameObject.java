@@ -12,6 +12,13 @@ public abstract class GameObject implements KeyListener, ActionListener {
     protected int width;
     protected int height;
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
     public GameObject(int x, int y, int width, int height){
         this.x = x;
         this.y = y;

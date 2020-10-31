@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Main loop of the game
+ */
 public class GameLoop extends JPanel implements KeyListener, ActionListener {
     private boolean play = false;
     private  int gameWidth;
@@ -30,7 +33,16 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
     private WallOfBricks mapGenerator;
     private Player player;
 
+    GameExpectator gameExpectator;
 
+    /**
+     * GameLoop constructor. Crea todos los objetos necesarios para desplegar
+     * la interfaz y el juego.
+     * @param rows: numero de filas
+     * @param columns: numero de columnas
+     * @param gameWidth: ancho del fondo
+     * @param gameHeight: altura del fondo
+     */
     public GameLoop(int rows, int columns, int gameWidth, int gameHeight){
         this.rows = rows;
         this.columns = columns;
@@ -51,8 +63,27 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
 
         timer = new Timer(delay, this);
         timer.start();
+
+        // Create Expectator
+        JFrame frame = new JFrame();
+        gameExpectator = new GameExpectator(rows, columns, gameWidth, gameHeight);
+
+        frame.setBounds(10, 10, 1000, 750);
+        frame.setTitle("Break Out TEC");
+        frame.setResizable(true);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.add(gameExpectator);
+
+
+
     }
 
+    /**
+     * Dibuja la interfaz.
+     * @param graphics
+     */
     public void paint(Graphics graphics){
         this.graphics = graphics;
         // background
@@ -151,6 +182,9 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
     }
 
     @Override
+    /**
+     * Es llamado que vez que se completa una acción de
+     */
     public void actionPerformed(ActionEvent e) {
         timer.start();
 
@@ -178,7 +212,7 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
                                 mapGenerator.setBrickValue(0, i, j);
                                 applyAbility(mapGenerator.wallOfBricks[i][j]);
                                 System.out.println("Me: " + i + " " + j + " have this ability: " + mapGenerator.wallOfBricks[i][j].hasAbility());
-                                totalBricks--;
+                                totalBricks --;
                                 score += mapGenerator.wallOfBricks[i][j].value;
 
                                 if (ball.x + 19 <= brickRect.x || ball.y + 1 >= brickRect.x + brickRect.width) {
@@ -207,7 +241,9 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
                 if (ball.x > gameWidth - ball.width) {
                     ball.xDir *= -1;
                 }
+                gameExpectator.updateLoop(play, ball.x, ball.y, ball.xDir, ball.yDir, player.width, player.x, player.y);
             }
+
         }
         repaint();
     }
