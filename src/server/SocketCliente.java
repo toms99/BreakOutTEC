@@ -7,6 +7,7 @@ package server;
  * Ejemplo de cliente en java que se conecta con un servidor en C.
  */
 
+
 import java.net.*;
 import java.io.*;
 
@@ -14,15 +15,8 @@ import java.io.*;
  * Clase que crea un socket cliente, establece la conexión y lee los datos
  * del servidor, escribiéndolos en pantalla.
  */
-
 public class SocketCliente
- {    
-
-    /** Programa principal, crea el socket cliente */
-    public static void main (String [] args)
-    {
-        new SocketCliente();
-    }
+ {
      /**
       * Crea el socket cliente y lee los datos
       */
@@ -31,28 +25,38 @@ public class SocketCliente
          try
          {
              /* Se crea el socket cliente */
-             Socket socket = new Socket ("localhost", 15557);
-             System.out.println ("Conexión exitosa...");
-             System.out.println ("Conectado al puerto 15557...");
+             Socket socket = new Socket ("localhost", 35557);
+             System.out.println ("Conexión exitosa al puerto 35557");
 
+             /* Se hace que el cierre espere a la recogida de todos los datos desde
+             * el otro lado */
              socket.setSoLinger (true, 10);
+             
+             /* Se obtiene un stream de lectura para leer objetos */
+             DataInputStream bufferEntrada =
+                new DataInputStream (socket.getInputStream());
+             
+             /* Se lee un Datosocket que nos envía el servidor y se muestra 
+              * en pantalla */
+             DatoSocket dato = new DatoSocket("");
+             dato.readObject(bufferEntrada);
+             System.out.println ("Cliente Java: Recibido " + dato.toString());
+             
 
-            DataInputStream bufferEntrada = new DataInputStream (socket.getInputStream());            // Se contruye el stream de entrada
-            DatoSocket aux = new DatoSocket(""); // Para guardar el dato leido del socket
-            aux.readObject (bufferEntrada); // Se lee del socket.
-            System.out.println ("Cliente:" + aux.toString());
 
-
-             /* Se obtiene un flujo de envio de datos para enviar un dato al servidor 
+             /* Se obtiene un flujo de envio de datos para enviar un dato al servidor */
              DataOutputStream bufferSalida =
                new DataOutputStream (socket.getOutputStream());
 
-             Se crea el dato y se escribe en el flujo de salida 
-             DatoSocket aux1 = new DatoSocket ("Adios");
+             /* Se crea el dato y se escribe en el flujo de salida */
+             DatoSocket aux = new DatoSocket ("400");
              aux.writeObject (bufferSalida);
 
-             System.out.println ("Cliente Java: Enviado " + aux.toString());*/
-            socket.close();
+             System.out.println ("Cliente Java: Enviado " + aux.toString());
+           
+             /* La llamada a setSoLinger() hará que el cierre espere a que el otro
+             lado retire los datos que hemos enviado */
+             socket.close();
          }
          catch (Exception e)
          {

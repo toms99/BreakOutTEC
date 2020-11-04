@@ -3,12 +3,13 @@
  *
  * Ejemplo de como un servidor puede manejar varios clientes con select().
  * Este programa hace de servidor.3
- * Puerto 15557
+ * Puerto 35557
  */
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <../libraries/Socket_Servidor.h>
@@ -63,6 +64,9 @@ int main()
 	int buffer;						/* Buffer para leer de los socket */
 	int maximo;						/* Número de descriptor más grande */
 	int i;							/* Para bubles */
+	char Cadena[100];
+	int Aux;
+    int Longitud_Cadena;
 	struct datosTableroInicial datosIn;
 	struct datosObjetos datoObj;
 
@@ -118,12 +122,15 @@ int main()
 		/* Se comprueba si algún cliente ya conectado ha enviado algo */
 		for (i=0; i<numeroClientes; i++)
 		{
+			
 			if (FD_ISSET (socketCliente[i], &descriptoresLectura))
-			{
+			{	
+				
 				/* Se lee lo enviado por el cliente y se escribe en pantalla */
 				if ((Lee_Socket (socketCliente[i], (char *)&buffer, sizeof(int)) > 0))
 					
 					printf ("Cliente %d envía %d\n", i+1, buffer);
+					
 				else
 				{
 					/* Se indica que el cliente ha cerrado la conexión y se
@@ -139,6 +146,8 @@ int main()
 		 * admite */
 		if (FD_ISSET (socketServidor, &descriptoresLectura))
 			nuevoCliente (socketServidor, socketCliente, &numeroClientes, datosIn);
+
+
 	}
 }
 
@@ -161,18 +170,49 @@ void nuevoCliente (int servidor, int *clientes, int *nClientes, struct datosTabl
 		(*nClientes)--;
 		return;
 	}
-		
-	/* Envía los datos iniciales del tablero al cliente */
-	//Escribe_Socket (clientes[(*nClientes)-1], 1, sizeof(int));
-	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.columnas), sizeof(int));
-	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.filas), sizeof(int));
-	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloRojo), sizeof(int));
-	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloVerde), sizeof(int));
-	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloAmarillo), sizeof(int));
-	Escribe_Socket (clientes[(*nClientes)-1], (char *)&(tab.ladrilloNaranja), sizeof(int));
 
-	/* Escribe en pantalla que ha aceptado al cliente y vuelve */
 	printf ("Aceptado cliente %d\n", *nClientes);
+
+	// Se envía una cadena de char a los clientes que se conectan con los valores iniciales del tablero:
+	// número de filas y columnas, y los valores de los ladrillos según el color
+
+	char Cadena[256];
+	char num_filas[10];
+	char num_columnas[10];
+	char valor_rojos[10];
+	char valor_verdes[10];
+	char valor_amarillos[10];
+	char valor_naranjas[10];
+
+	sprintf(num_filas, "%d", tab.filas);
+	sprintf(num_columnas, "%d", tab.columnas);
+	sprintf(valor_rojos, "%d", tab.ladrilloRojo);
+	sprintf(valor_verdes, "%d", tab.ladrilloVerde);
+	sprintf(valor_amarillos, "%d", tab.ladrilloAmarillo);
+	sprintf(valor_naranjas, "%d", tab.ladrilloNaranja);
+
+	snprintf(Cadena, sizeof Cadena, "%s%s%s%s%s%s%s%s%s%s%s%s", num_filas, "f", num_columnas, "c", valor_rojos, "r", valor_verdes, "v", valor_amarillos, "a", valor_naranjas, "n");
+
+
+	int contador = 0;
+    // Obtiene el largo de la cadena de caracteres
+    while (Cadena[++contador] != 0);
+	printf ("%d", contador);
+	
+	int Longitud_Cadena = contador+1;
+
+
+    /* El entero que se envía por el socket hay que transformalo a formato red */
+    int Aux = htonl (Longitud_Cadena);
+
+    /* Se envía el entero transformado */
+    Escribe_Socket (clientes[(*nClientes)-1], (char *)&Aux, sizeof(Longitud_Cadena));
+    printf ("Servidor C: Enviado %d\n", Longitud_Cadena);
+  
+    // Se envía la cadena 
+    Escribe_Socket (clientes[(*nClientes)-1], Cadena, Longitud_Cadena);
+    printf ("Servidor C: Enviado %s\n", Cadena);
+	
 	return;
 }
 

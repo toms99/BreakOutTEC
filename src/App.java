@@ -1,6 +1,8 @@
 import GameObjects.GameLoop;
+import server.SocketCliente;
 
 import javax.swing.*;
+
 
 /**
  * Hello world!
@@ -14,7 +16,9 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        /* Se crea el socket cliente */
+        new SocketCliente();
 
         JFrame frame = new JFrame();
         //GameLoop gameLoop = new GameLoop(8, 14, 1000, 700, 1, 2, 3, 4);

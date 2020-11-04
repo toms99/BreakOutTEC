@@ -6,7 +6,7 @@ package server;
  * DatoSocket.java
  * Dato que se va a enviar entre servidores y clientes java y c.
  * 
- * Compilar:                sudo /usr/java/jdk-11.0.9+11/bin/javac SocketServidor.java SocketCliente.java DatoSocket.java
+ * Compilar:                sudo /usr/java/jdk-11.0.9+11/bin/javac SocketCliente.java DatoSocket.java
  */
 
 import java.io.*;
@@ -41,7 +41,7 @@ public class DatoSocket implements Serializable
    public String toString ()
    {
        String resultado;
-       resultado = Integer.toString(c) + " -- " + d;
+       resultado = d;
        return resultado;
    }
 
