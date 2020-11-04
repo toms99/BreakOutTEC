@@ -152,6 +152,7 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
 
         }
         System.out.println(rows + "\n" + columns + "\n" + red + "\n" + green + "\n" + yellow + "\n" + orange + "\n");
+        SingletonGameLoop = new GameLoop(rows, columns, 1000, 700, red, orange, yellow, green);
     }
 
 
