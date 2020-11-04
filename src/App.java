@@ -17,7 +17,7 @@ public final class App {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         //readString("12f62c6r54v69a52n");
-        String message = "";
+        String message = "8f14c6r54v69a52n";
 
         JFrame frame = new JFrame();
         //GameLoop gameLoop = new GameLoop(8, 14, 1000, 700, 1, 2, 3, 4);
