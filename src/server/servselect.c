@@ -196,9 +196,7 @@ void nuevoCliente (int servidor, int *clientes, int *nClientes, struct datosTabl
 
 	int contador = 0;
     // Obtiene el largo de la cadena de caracteres
-    while (Cadena[++contador] != 0);
-	printf ("%d", contador);
-	
+    while (Cadena[++contador] != 0);	
 	int Longitud_Cadena = contador+1;
 
 
