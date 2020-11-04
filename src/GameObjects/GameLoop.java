@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -57,7 +58,7 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
         this.rows = rows;
         this.columns = columns;
         this.gameWidth = gameWidth;
-        this. gameHeight = gameHeight;
+        this.gameHeight = gameHeight;
         this.redScore = redScore;
         this.yellowScore = yellowScore;
         this.greenScore = greenScore;
@@ -72,6 +73,8 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
                 redScore, orangeScore, yellowScore, greenScore);
         totalBricks = rows*columns;
         player = new Player(gameWidth/2 - 50, gameHeight - 28, 100, 8, gameWidth, gameHeight);
+
+
         Ball newball = new Ball(gameWidth/2, gameHeight/2);
         ballsCount += 1;
         balls.add(newball);
@@ -91,8 +94,6 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
 
         frame.add(gameExpectator);
 
-
-
     }
 
     /**
@@ -101,12 +102,34 @@ public class GameLoop extends JPanel implements KeyListener, ActionListener {
      */
     public static GameLoop getInstance()
     {
-        if (SingletonGameLoop == null)
-            SingletonGameLoop = new GameLoop(8, 14, 1000, 700, 1, 2, 3, 4);;
+        if (SingletonGameLoop == null) {
+            getData();
+            //SingletonGameLoop = new GameLoop(8, 14, 1000, 700, 1, 2, 3, 4);;
+        }
 
         return SingletonGameLoop;
+
+
     }
 
+    public static void getData(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Hola, te pediremos algunos datos antes de comenzar:");
+        System.out.println("Número de filas");
+        int rows = Integer.parseInt(in.nextLine());
+        System.out.println("Número de columnas");
+        int columns = Integer.parseInt(in.nextLine());
+        System.out.println("Puntaje de los ladrillos rojos");
+        int redScore = Integer.parseInt(in.nextLine());
+        System.out.println("Puntaje de los ladrillos anaranjados");
+        int orangeScore = Integer.parseInt(in.nextLine());
+        System.out.println("Puntaje de los ladrillos amarillos");
+        int yellowScore = Integer.parseInt(in.nextLine());
+        System.out.println("Puntaje de los ladrillos verdes");
+        int greenScore = Integer.parseInt(in.nextLine());
+        SingletonGameLoop = new GameLoop(rows, columns, 1000, 700, redScore, orangeScore, yellowScore, greenScore);
+
+    }
 
     /**
      * Dibuja la interfaz.
